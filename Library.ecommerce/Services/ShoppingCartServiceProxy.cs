@@ -1,35 +1,30 @@
-﻿using Spring2025_Samples.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Spring2025_Samples.Models;
+
 
 namespace Library.eCommerce.Services
 {
-    public class ProductServiceProxy
+    public class ShoppingCartServiceProxy
     {
-        private ProductServiceProxy()
+        private ShoppingCartServiceProxy()
         {
-            Products = new List<Product?>();
+            ShoppingCart = new List<Product?>();
         }
-
         private int LastKey
         {
             get
             {
-                if(!Products.Any())
+                if(!ShoppingCart.Any())
                 {
                     return 0;
                 }
 
-                return Products.Select(p => p?.Id ?? 0).Max();
+                return ShoppingCart.Select(p => p?.Id ?? 0).Max();
             }
         }
 
-        private static ProductServiceProxy? instance;
+        private static ShoppingCartServiceProxy? instance;
         private static object instanceLock = new object();
-        public static ProductServiceProxy Current
+        public static ShoppingCartServiceProxy Current
         {
             get
             {
@@ -37,26 +32,24 @@ namespace Library.eCommerce.Services
                 {
                     if (instance == null)
                     {
-                        instance = new ProductServiceProxy();
+                        instance = new ShoppingCartServiceProxy();
                     }
                 }
 
                 return instance;
             }
         }
-
-        public List<Product?> Products { get; private set; }
-
+        public List<Product?> ShoppingCart { get; private set; }
 
         public Product AddOrUpdate(Product product)
         {
             if(product.Id == 0)
             {
                 product.Id = LastKey + 1;
-                Products.Add(product);
+                ShoppingCart.Add(product);
+                
                 
             }
-
 
             return product;
         }
@@ -68,13 +61,14 @@ namespace Library.eCommerce.Services
                 return null;
             }
 
-            Product? product = Products.FirstOrDefault(p => p?.Id == id);
-            Products.Remove(product);
+            Product? product = ShoppingCart.FirstOrDefault(p => p?.Id == id);
+            ShoppingCart.Remove(product);
 
             return product;
         }
 
-    }
+        
+        
 
-    
+    }
 }

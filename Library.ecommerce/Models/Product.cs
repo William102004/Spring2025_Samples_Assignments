@@ -12,17 +12,24 @@ namespace Spring2025_Samples.Models
 
         public string? Name { get; set; }
 
+        public double Price { get; set; }
+
+        public int Quantity { get; set; }
+
+
         public string? Display
         {
             get
             {
-                return $"{Id}. {Name}";
+                return $"{Id}. {Name}: ${Price} , {Quantity} in Stock.";
             }
         }
 
         public Product()
         {
             Name = string.Empty;
+            Price = 0.0;
+            Quantity = 0;
         }
 
         public override string ToString()
