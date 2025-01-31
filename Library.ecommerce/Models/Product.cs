@@ -54,7 +54,9 @@ namespace Spring2025_Samples.Models
                     return $"{Id}. {Name}: ${Price} , {Quantity} in Cart.";
                 }
                 else
-                return $"{Id}. {Name}: ${Price} , {Quantity} in Stock.";
+                {
+                    return $"{Id}. {Name}: ${Price} , {Quantity} in Stock.";
+                }
             }
         }
 

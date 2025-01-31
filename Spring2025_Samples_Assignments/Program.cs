@@ -60,7 +60,7 @@ namespace MyApp
                     case 'c':
                         if(choiceM == 'S' || choiceM == 's')
                         {
-                            if(list == null)
+                            if(list?.Count == 0)
                             {
                                 Console.WriteLine("Error: No items in inventory");
                                 break;
@@ -91,7 +91,15 @@ namespace MyApp
                     case 'r':
                         if(choiceM == 'S' || choiceM == 's')
                         {
-                            ShoppingCart.ForEach(Console.WriteLine);
+                           if(list?.Count == 0)
+                           {
+                               Console.WriteLine("Error: No items in inventory");
+                               break;
+                           }
+                           else
+                           {
+                               ShoppingCart.ForEach(Console.WriteLine);
+                           }
                         }
                         else
                         {    
@@ -105,20 +113,31 @@ namespace MyApp
 
                         if(choiceM == 'S' || choiceM == 's')
                         {
-                            Console.WriteLine("Which product in Shopping Cart would you like to update?");
-                             selection = int.Parse(Console.ReadLine() ?? "-1");
-                             var selectedProd = ShoppingCart.FirstOrDefault(p => p.Id == selection);
-
-                            if(selectedProd != null)
+                            if(list?.Count == 0)
                             {
-                                selectedProd.Name = Console.ReadLine() ?? "ERROR";
-                                if (list != null)
+                                Console.WriteLine("Error: No items in inventory");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Which product in Shopping Cart would you like to update?");
+                                selection = int.Parse(Console.ReadLine() ?? "-1");
+                                var selectedProd = ShoppingCart.FirstOrDefault(p => p.Id == selection);
+
+                                if(selectedProd != null)
                                 {
-                                    ShoppingCartServiceProxy.Current.AddOrUpdate(selectedProd, list);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Error: No items in inventory");
+                                    Console.WriteLine("Enter new quantity:");
+                                    int newQuantity = int.Parse(Console.ReadLine() ?? "0");
+                                    selectedProd.Quantity = newQuantity;
+                                    //selectedProd.Name = Console.ReadLine() ?? "ERROR";
+                                    if (list != null)
+                                    {
+                                        ShoppingCartServiceProxy.Current.AddOrUpdate(selectedProd, list);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Error: No items in inventory");
+                                    }
                                 }
                             }
                         }
@@ -130,7 +149,10 @@ namespace MyApp
 
                             if(selectedProd != null)
                             {
-                                selectedProd.Name = Console.ReadLine() ?? "ERROR";
+                                Console.WriteLine("Enter new quantity:");
+                                int newQuantity = int.Parse(Console.ReadLine() ?? "0");
+                                selectedProd.Quantity = newQuantity;
+                               // selectedProd.Name = Console.ReadLine() ?? "ERROR";
                                 ProductServiceProxy.Current.AddOrUpdate(selectedProd);
                             }
                         }
@@ -142,6 +164,7 @@ namespace MyApp
                         //throw it away
                         if(choiceM == 'S' || choiceM == 's')
                         {
+            
                             Console.WriteLine("Which product in Shopping Cart would you like to delete?");
                             selection = int.Parse(Console.ReadLine() ?? "-1");
                             if (list != null)
@@ -152,6 +175,8 @@ namespace MyApp
                             {
                                 Console.WriteLine("Error: No items in inventory");
                             }
+                            
+                        
                         }
                         else
                         {
@@ -164,12 +189,34 @@ namespace MyApp
                     case 'P':
                     case 'p':
                         //checkout
-                        double total = 0.0;
-                        ShoppingCart.ForEach(p => total += p.Price * p.Quantity);
-                        total = total + (total * 0.07);
-                        total = Math.Round(total, 2);
-                        Console.WriteLine($"Total: ${total}");
-                        
+                       if(list?.Count == 0)
+                        {
+                            Console.WriteLine("Error: No items in inventory");
+                            break;
+                        }
+                        else
+                        {
+                            double total = 0.0;
+                            ShoppingCart.ForEach(p => total += p.Price * p.Quantity);
+                            
+                            Console.WriteLine("-----------------------------------");
+                            Console.WriteLine("   Receipt for E-Commerce Shop     ");
+                            Console.WriteLine("-----------------------------------");
+                            Console.WriteLine("         Items in Cart             ");
+                            Console.WriteLine("-----------------------------------");
+                            Console.WriteLine("Product Name: Price, Quantity     ");
+                            ShoppingCart.ForEach(Console.WriteLine);
+                            Console.WriteLine("-----------------------------------");
+                            Console.WriteLine("Subtotal: $" + total);
+                            Console.WriteLine("Tax: 7%");
+                            Console.WriteLine("-----------------------------------");
+                            total = total + (total * 0.07);
+                            total = Math.Round(total, 2);
+                            Console.WriteLine($"Total: ${total}");
+                            Console.WriteLine("-----------------------------------"); 
+                            Console.WriteLine("Thank you for shopping with us!");
+                            ShoppingCart.Clear();
+                        }
                         break;
                     case 'S':
                     case 's':
