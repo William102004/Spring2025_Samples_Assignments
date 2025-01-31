@@ -18,7 +18,7 @@ namespace Library.eCommerce.Services
                     return 0;
                 }
 
-                return ShoppingCart.Select(p => p?.Id ?? 0).Max();
+                return ShoppingCart.Select(s => s?.Id ?? 0).Max();
             }
         }
 
@@ -41,30 +41,65 @@ namespace Library.eCommerce.Services
         }
         public List<Product?> ShoppingCart { get; private set; }
 
-        public Product AddOrUpdate(Product product)
+        public  Product AddOrUpdate(Product product, List<Product> list)
         {
+            Product? newItem = product;
+            var existingProduct = list.FirstOrDefault(p => p?.Name == newItem.Name);
             if(product.Id == 0)
             {
-                product.Id = LastKey + 1;
-                ShoppingCart.Add(product);
-                
-                
+                if(existingProduct != null && product.Quantity > existingProduct.Quantity)
+                {
+                    Console.WriteLine("Error: Not enough in stock");
+                }
+                else
+                {
+                    list.FirstOrDefault(p => p?.Name == newItem.Name).Quantity -= newItem.Quantity;
+                    existingProduct = list.FirstOrDefault(p => p?.Name == newItem.Name);
+                    if (existingProduct != null)
+                    {
+                        newItem.Price = existingProduct.Price;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: Product not found in the list");
+                    }
+                }
+                newItem = new Product(product , product.Quantity);
+                newItem.Id = LastKey + 1;
+                ShoppingCart.Add(newItem);
             }
-
-            return product;
+            return newItem;
         }
 
-        public Product? Delete(int id)
+        public Product? Delete(int id, List<Product> list)
         {
             if(id == 0)
             {
                 return null;
             }
+            
 
-            Product? product = ShoppingCart.FirstOrDefault(p => p?.Id == id);
-            ShoppingCart.Remove(product);
+            Product? shoppingCartItem = ShoppingCart.FirstOrDefault(p => p?.Id == id);
+            var existingProduct = list.FirstOrDefault(p => p?.Name == shoppingCartItem?.Name);
+            if (shoppingCartItem != null)
+            {
+            
+                if (existingProduct != null)
+                {
+                    existingProduct.Quantity += shoppingCartItem.Quantity;
+                }
+                else
+                {
+                   ProductServiceProxy.Current.AddOrUpdate(shoppingCartItem) ;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: Product not found in Shopping Cart");
+            }
+            ShoppingCart.Remove(shoppingCartItem);
 
-            return product;
+            return shoppingCartItem;
         }
 
         
