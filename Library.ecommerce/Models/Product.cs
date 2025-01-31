@@ -8,6 +8,8 @@ namespace Spring2025_Samples.Models
 {
     public class Product
     {
+
+        //variable for a product, an Id for the product, a name, a price, and a quantity. There is a private version with a public getter and setter for each variable.
         public int Id { get; set; }
 
         public bool InCart = false;
@@ -44,7 +46,7 @@ namespace Spring2025_Samples.Models
             }
         }
 
-
+        //function to displat the product, the name, price, and quantity of the product. If the product is in the cart, it will display the quantity in the cart. If the product is not in the cart, it will display the quantity in stock.
         public string? Display
         {
             get
@@ -60,6 +62,7 @@ namespace Spring2025_Samples.Models
             }
         }
 
+        //constructor for the product, setting the name to an empty string, the price to 0.0, and the quantity to 0.
         public Product()
         {
             Name = string.Empty;
@@ -67,6 +70,7 @@ namespace Spring2025_Samples.Models
             Quantity = 0;
         }
 
+        //constructor that takes in a product and a quantity, setting the name, price, and quantity to the product's name, price, and quantity.
        public Product(Product product, int quantity)
        {
             Name = product.Name;
@@ -75,6 +79,7 @@ namespace Spring2025_Samples.Models
 
        }
 
+        
         public override string ToString()
         {
             return Display ?? string.Empty;
