@@ -80,22 +80,22 @@ namespace Library.eCommerce.Services
             
 
             Product? shoppingCartItem = ShoppingCart.FirstOrDefault(p => p?.Id == id);
-            var existingProduct = list.FirstOrDefault(p => p?.Name == shoppingCartItem?.Name);
-            if (shoppingCartItem != null)
+            if (shoppingCartItem == null)
             {
+                Console.WriteLine("Error: Product not found in Shopping Cart");
+                return null;
+            }
+
+            var existingProduct = list.FirstOrDefault(p => p?.Name == shoppingCartItem?.Name);
             
-                if (existingProduct != null)
-                {
-                    existingProduct.Quantity += shoppingCartItem.Quantity;
-                }
-                else
-                {
-                   ProductServiceProxy.Current.AddOrUpdate(shoppingCartItem) ;
-                }
+            
+            if (existingProduct != null)
+            {
+                existingProduct.Quantity += shoppingCartItem.Quantity;
             }
             else
             {
-                Console.WriteLine("Error: Product not found in Shopping Cart");
+                ProductServiceProxy.Current.AddOrUpdate(shoppingCartItem) ;
             }
             ShoppingCart.Remove(shoppingCartItem);
 

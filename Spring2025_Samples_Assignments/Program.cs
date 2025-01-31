@@ -169,6 +169,7 @@ namespace MyApp
                         total = total + (total * 0.07);
                         total = Math.Round(total, 2);
                         Console.WriteLine($"Total: ${total}");
+                        
                         break;
                     case 'S':
                     case 's':
