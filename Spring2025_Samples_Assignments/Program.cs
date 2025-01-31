@@ -29,8 +29,8 @@ namespace MyApp
 
             
             
-            List<Product?> list = ProductServiceProxy.Current.Products; //.Where(p => p != null).Cast<Product>().ToList();
-            List<Product?> ShoppingCart = ShoppingCartServiceProxy.Current.ShoppingCart; //.Where(p => p != null).Cast<Product>().ToList();
+            List<Product?> list = ProductServiceProxy.Current.Products; 
+            List<Product?> ShoppingCart = ShoppingCartServiceProxy.Current.ShoppingCart; 
            
             do
             {
@@ -200,7 +200,7 @@ namespace MyApp
                             ShoppingCart.ForEach(p => total += p.Price * p.Quantity);
                             
                             Console.WriteLine("-----------------------------------");
-                            Console.WriteLine("   Receipt for E-Commerce Shop     ");
+                            Console.WriteLine("   Receipt for Amazon Purchase    ");
                             Console.WriteLine("-----------------------------------");
                             Console.WriteLine("         Items in Cart             ");
                             Console.WriteLine("-----------------------------------");
