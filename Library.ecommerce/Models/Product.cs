@@ -12,7 +12,7 @@ namespace Spring2025_Samples.Models
         //variable for a product, an Id for the product, a name, a price, and a quantity. There is a private version with a public getter and setter for each variable.
         public int Id { get; set; }
 
-        public bool InCart = false;
+        public bool InCart { get; set; }
 
         public string? Name { get; set; }
 
@@ -51,7 +51,7 @@ namespace Spring2025_Samples.Models
         {
             get
             {
-                if(InCart)
+                if(InCart == true)
                 {
                     return $"{Id}. {Name}: ${Price} , {Quantity} in Cart.";
                 }
@@ -68,15 +68,16 @@ namespace Spring2025_Samples.Models
             Name = string.Empty;
             Price = 0.0;
             Quantity = 0;
+            InCart = false;
         }
 
         //constructor that takes in a product and a quantity, setting the name, price, and quantity to the product's name, price, and quantity.
-       public Product(Product product, int quantity)
+       public Product(Product product , int quantity)
        {
             Name = product.Name;
             Price = product.Price;
-            Quantity = quantity;
-
+            Quantity = product.quantity;
+            InCart = true;
        }
 
         

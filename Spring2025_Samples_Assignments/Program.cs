@@ -81,7 +81,7 @@ namespace MyApp
                             ProductServiceProxy.Current.AddOrUpdate(new Product
                             {
                                 Name = Console.ReadLine(),
-                                Price = double.Parse(Console.ReadLine() ?? "0.0"),
+                                Price = double.Parse(Console.ReadLine() ?? "0"),
                                 Quantity = int.Parse(Console.ReadLine() ?? "0")
 
                             });
