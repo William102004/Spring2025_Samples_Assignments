@@ -103,7 +103,14 @@ namespace MyApp
                         }
                         else
                         {    
-                                list.ForEach(Console.WriteLine);   
+                                if (list != null)
+                                {
+                                    list.ForEach(Console.WriteLine);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Error: No items in inventory");
+                                }
                         }
                         break;
                     case 'U':
@@ -122,7 +129,7 @@ namespace MyApp
                             {
                                 Console.WriteLine("Which product in Shopping Cart would you like to update?");
                                 selection = int.Parse(Console.ReadLine() ?? "-1");
-                                var selectedProd = ShoppingCart.FirstOrDefault(p => p.Id == selection);
+                                var selectedProd = ShoppingCart.FirstOrDefault(p => p?.Id == selection);
 
                                 if(selectedProd != null)
                                 {
@@ -145,7 +152,7 @@ namespace MyApp
                         {
                             Console.WriteLine("Which product would you like to update?");
                             selection = int.Parse(Console.ReadLine() ?? "-1");
-                            var selectedProd = list?.FirstOrDefault(p => p.Id == selection);
+                            var selectedProd = list?.FirstOrDefault(p => p?.Id == selection);
 
                             if(selectedProd != null)
                             {

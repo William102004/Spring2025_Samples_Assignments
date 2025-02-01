@@ -44,6 +44,7 @@ namespace Library.eCommerce.Services
         public  Product AddOrUpdate(Product product, List<Product> list)
         {
             Product? newItem = product;
+            newItem.InCart = true;
             var existingProduct = list.FirstOrDefault(p => p?.Name == newItem.Name);
             if(product.Id == 0)
             {
@@ -53,7 +54,15 @@ namespace Library.eCommerce.Services
                 }
                 else
                 {
-                    list.FirstOrDefault(p => p?.Name == newItem.Name).Quantity -= newItem.Quantity;
+                    var productInList = list.FirstOrDefault(p => p?.Name == newItem.Name);
+                    if (productInList != null)
+                    {
+                        productInList.Quantity -= newItem.Quantity;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: Product not found in the list");
+                    }
                     existingProduct = list.FirstOrDefault(p => p?.Name == newItem.Name);
                     if (existingProduct != null)
                     {

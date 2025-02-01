@@ -51,7 +51,7 @@ namespace Spring2025_Samples.Models
         {
             get
             {
-                if(InCart == true)
+                if(InCart)
                 {
                     return $"{Id}. {Name}: ${Price} , {Quantity} in Cart.";
                 }
