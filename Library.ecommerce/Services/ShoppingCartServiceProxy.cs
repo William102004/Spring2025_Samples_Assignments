@@ -126,7 +126,13 @@ namespace Library.eCommerce.Services
             }
             else
             {
-                ProductServiceProxy.Current.AddOrUpdate(shoppingCartItem) ;
+                ProductServiceProxy.Current.AddOrUpdate(new Product
+                {
+                    Name = shoppingCartItem.Name,
+                    Quantity = shoppingCartItem.Quantity,
+                    Price = shoppingCartItem.Price,
+                    InCart = false
+                }) ;
             }
             ShoppingCart.Remove(shoppingCartItem);
 

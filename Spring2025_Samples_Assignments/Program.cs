@@ -175,14 +175,7 @@ namespace MyApp
             
                             Console.WriteLine("Which product in Shopping Cart would you like to delete?");
                             selection = int.Parse(Console.ReadLine() ?? "-1");
-                            if (list != null)
-                            {
-                                ShoppingCartServiceProxy.Current.Delete(selection, list);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Error: No items in inventory");
-                            }
+                            ShoppingCartServiceProxy.Current.Delete(selection, list);     
                             
                         
                         }
@@ -197,13 +190,7 @@ namespace MyApp
                     case 'P':
                     case 'p':
                         //checkout
-                       if(list?.Count == 0)
-                        {
-                            Console.WriteLine("Error: No items in inventory");
-                            break;
-                        }
-                        else
-                        {
+                       
                             double total = 0.0;
                             ShoppingCart.ForEach(p => total += p.Price * p.Quantity);
                             
@@ -224,7 +211,7 @@ namespace MyApp
                             Console.WriteLine("-----------------------------------"); 
                             Console.WriteLine("Thank you for shopping with us!");
                             ShoppingCart.Clear();
-                        }
+                        
                         break;
                     case 'S':
                     case 's':
