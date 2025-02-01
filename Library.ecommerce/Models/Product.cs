@@ -76,7 +76,7 @@ namespace Spring2025_Samples.Models
        {
             Name = product.Name;
             Price = product.Price;
-            Quantity = product.quantity;
+            Quantity = quantity;
             InCart = true;
        }
 

@@ -129,7 +129,8 @@ namespace MyApp
                             {
                                 Console.WriteLine("Which product in Shopping Cart would you like to update?");
                                 selection = int.Parse(Console.ReadLine() ?? "-1");
-                                var selectedProd = ShoppingCart.FirstOrDefault(p => p?.Id == selection);
+                                int oldQuantity = ShoppingCart.FirstOrDefault(p => p?.Id == selection)?.Quantity ?? 0;
+                                Product? selectedProd = ShoppingCart.FirstOrDefault(p => p?.Id == selection);
 
                                 if(selectedProd != null)
                                 {
@@ -139,7 +140,7 @@ namespace MyApp
                                     //selectedProd.Name = Console.ReadLine() ?? "ERROR";
                                     if (list != null)
                                     {
-                                        ShoppingCartServiceProxy.Current.AddOrUpdate(selectedProd, list);
+                                        ShoppingCartServiceProxy.Current.Update(selectedProd,oldQuantity,list);
                                     }
                                     else
                                     {

@@ -47,43 +47,59 @@ namespace Library.eCommerce.Services
             product.InCart = true;
             var existingProduct = list.FirstOrDefault(p => p?.Name == product.Name);
 
+            if (existingProduct == null)
+            {
+                Console.WriteLine("Error: Product not found in the list");
+                return product;
+            }
+
             if (product.Id == 0)
             {
-                if (existingProduct == null)
-                {
-                    Console.WriteLine("Error: Product not found in the list");
-                    return product;
-                }
+                
 
                 if (product.Quantity > existingProduct.Quantity)
                 {
                     Console.WriteLine("Error: Not enough in stock");
                     return product;
                 }
-                existingProduct.Quantity -= product.Quantity;
-                product.Price = existingProduct.Price;
-                var productInCart = ShoppingCart.FirstOrDefault(p => p?.Name == product.Name);
-                if(productInCart != null)
-                {
-                    productInCart.Quantity += product.Quantity;
-                    return productInCart;
-                }
-                else
-                {
-                    var newItem = new Product(product, product.Quantity)
-                    {
-                        Id = LastKey + 1
-                    };
-                    ShoppingCart.Add(newItem);
-                    return newItem;
-                }
-            }
-    
                 
-            return product;
-        
+                existingProduct.Quantity -= product.Quantity;
+                product.Price = existingProduct.Price; 
+                var newItem = new Product(product, product.Quantity)
+                {
+                    Id = LastKey + 1
+                };
+                ShoppingCart.Add(newItem);
+                return newItem;
+                
+                
             
+            }   
 
+            return product;
+        }
+
+        public Product? Update(Product product, int quantity, List<Product> list)
+        {
+            if(product.Id == 0)
+            {
+                return null;
+            }
+
+            int quantityDifference = product.Quantity - quantity;
+            var existingProduct = list.FirstOrDefault(p => p?.Name == product.Name);
+            if (existingProduct == null)
+            {
+                Console.WriteLine("Error: Product not found in the list");
+                return product;
+            }
+            existingProduct.Quantity -= quantityDifference;
+            var shoppingCartItem = ShoppingCart.FirstOrDefault(p => p?.Id == product.Id);
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.Quantity = product.Quantity;
+            }
+            return product;
         }
 
         public Product? Delete(int id, List<Product> list)
