@@ -1,24 +1,27 @@
-﻿namespace Maui.ecommerce;
-
-public partial class MainPage : ContentPage
+﻿namespace Maui.eCommerce
 {
-	int count = 0;
+    public partial class MainPage : ContentPage
+    {
+        int count = 0;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+        public MainPage()
+        {
+            InitializeComponent();
+			BindingContext = this;
+        }
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
+		public string Display
+		{
+			get
+			{
+				return "Hello World!";
+			}
+		}
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+        private void InventoryClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//InventoryManagement");
+        }
+    }
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
 }
-
