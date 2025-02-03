@@ -1,9 +1,10 @@
-﻿namespace Maui.ecommerce;
-
-public partial class AppShell : Shell
+﻿namespace Maui.eCommerce
 {
-	public AppShell()
-	{
-		InitializeComponent();
-	}
+    public partial class AppShell : Shell
+    {
+        public AppShell()
+        {
+            InitializeComponent();
+        }
+    }
 }

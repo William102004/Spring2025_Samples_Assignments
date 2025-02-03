@@ -1,4 +1,6 @@
-﻿namespace Maui.eCommerce
+﻿using Maui.ecommerce.viewModels;
+
+namespace Maui.eCommerce
 {
     public partial class MainPage : ContentPage
     {
@@ -7,16 +9,17 @@
         public MainPage()
         {
             InitializeComponent();
-			BindingContext = this;
+            BindingContext = new MainViewModel();
+
         }
 
-		public string Display
-		{
-			get
-			{
-				return "Hello World!";
-			}
-		}
+        public string Display
+        {
+            get
+            {
+                return "Hello World!";
+            }
+        }
 
         private void InventoryClicked(object sender, EventArgs e)
         {

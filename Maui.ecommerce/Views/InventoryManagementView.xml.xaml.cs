@@ -1,13 +1,13 @@
-namespace Maui.ecommerce;
+namespace Maui.eCommerce.Views;
 
-public partial class InventoryManagementView.xml : ContentPage
+public partial class InventoryManagementView : ContentPage
 {
-	public InventoryManagementView.xml()
+	public InventoryManagementView()
 	{
 		InitializeComponent();
 	}
 
-	private void CancelClicked(object sender, EventArgs e)
+    private void CancelClicked(object sender, EventArgs e)
     {
 		Shell.Current.GoToAsync("//MainPage");
     }
